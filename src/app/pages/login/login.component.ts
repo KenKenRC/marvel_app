@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormBuilder, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiService } from '../../service/api.service';
@@ -10,7 +10,7 @@ import { LoginResponse } from '../../service/models/loginResponse';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent {
+export class LoginComponent implements OnDestroy {
 
   loginForm = this.formBuilder.group({
     usuario: ['',Validators.required],
@@ -20,8 +20,11 @@ export class LoginComponent {
   response?: LoginResponse;
 
   constructor(private formBuilder: FormBuilder, private router: Router, private service: ApiService){ }
+  ngOnDestroy(): void {
+  }
 
   ngOnInit(): void{
+    
   }
 
   login(){
