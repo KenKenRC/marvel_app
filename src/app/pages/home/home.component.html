@@ -1,0 +1,35 @@
+<div class="list-group" *ngIf="mostrarLista">
+    <a (click)="seleccionarPersonaje(item)" data-bs-toggle="modal" data-bs-target="#modalPersonaje"
+        *ngFor="let item of listaPersonajes" class="list-group-item list-group-item-action" aria-current="true">
+        {{item.nombre}}
+    </a>
+</div>
+
+<div class="modal fade" id="modalPersonaje" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">{{selectedPersonaje.nombre}}</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {{selectedPersonaje.descripcion ? selectedPersonaje.descripcion : 'No description'}}
+                <br/>
+                <br/>
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Comics</h5>
+                            <ul class="list-group">
+                                <li *ngFor="let comic of selectedPersonaje.lstComics" class="list-group-item list-group-item-light">
+                                    {{comic}}
+                                </li>
+                            </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

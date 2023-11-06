@@ -1,0 +1,15 @@
+<div *ngIf="mostrarBitacora">
+    <div class="container text-center">
+        <div *ngFor="let bitacora of response" class="row">
+            <div class="col">
+                {{bitacora.id}}
+            </div>
+            <div class="col">
+                {{bitacora.fecha}}
+            </div>
+            <div class="col">
+                {{bitacora.service}}
+            </div>
+        </div>
+    </div>
+</div>
