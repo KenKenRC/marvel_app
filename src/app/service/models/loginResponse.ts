@@ -1,4 +1,4 @@
 export interface LoginResponse{
-    sesion: String,
-    codigo: String
+    token: string,
+    codigo: string
 }

@@ -11,15 +11,24 @@ import { BehaviorSubject, tap } from 'rxjs';
   providedIn: 'root'
 })
 export class ApiService {
-  private host = 'http://localhost:8080/api';
+  private host = 'http://localhost:8080';
 
   currentUser: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  currentToken: string = "";
 
   constructor(private http: HttpClient) {
   }
 
+  createAuthorizationHeader(): HttpHeaders {
+    var headers = new HttpHeaders().set('Authorization', this.currentToken); 
+    console.log('Token: ' + this.currentToken);
+    return headers;
+  }
+
   public getCharacters(): Observable<PersonajesResponse> {
-    return this.http.get<PersonajesResponse>(this.host + '/characters');
+    let header = this.createAuthorizationHeader();
+    const requestOptions = {  headers: header};   
+    return this.http.get<PersonajesResponse>(this.host + '/api/characters', requestOptions);
   }
 
   public login(loginRequest: LoginRequest): Observable<LoginResponse> {
@@ -27,13 +36,17 @@ export class ApiService {
       tap((userData: LoginResponse) => {
         if(userData.codigo=="0"){
           this.currentUser.next(true);
+          console.log(userData.token);
+          this.currentToken = userData.token;
         }
       })
     )
   }
 
   public getBitacora(): Observable<BitacoraResponse[]> {
-    return this.http.get<BitacoraResponse[]>(this.host + '/bitacora');
+    let header = this.createAuthorizationHeader();
+    const requestOptions = {  headers: header };   
+    return this.http.get<BitacoraResponse[]>(this.host + '/api/bitacora',requestOptions);
   }
 
   get userLoginOn(): Observable<boolean>{
